@@ -17,6 +17,11 @@ library(tidyverse)
 
 ```{r Import data}
 # Import data
+dir_root <- "~/Dropbox/Emory/ECON771_health2"
+
+df_HCRIS96 <- read.table(paste0(dir_root,"/data/HCRIS-Ian/data/output/HCRIS_Data_v1996.txt"), sep = '\t')
+df_HCRIS10 <- read.table(paste0(dir_root,"/data/HCRIS-Ian/data/output/HCRIS_Data_v2010.txt"), sep = '\t')
+df_pos <- read.table(paste0(dir_root,"/data/cms-pos-ian/cms-pos/data/output/pos-data-combined.txt"), sep = 't')
 ```
 
 
