@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r Import library}
+rm(list=ls())
 library(tidyverse)
 ```
 
@@ -21,7 +22,7 @@ dir_root <- "~/Dropbox/Emory/ECON771_health2"
 
 df_HCRIS96 <- read.table(paste0(dir_root,"/data/HCRIS-Ian/data/output/HCRIS_Data_v1996.txt"), sep = '\t')
 df_HCRIS10 <- read.table(paste0(dir_root,"/data/HCRIS-Ian/data/output/HCRIS_Data_v2010.txt"), sep = '\t')
-df_pos <- read.table(paste0(dir_root,"/data/cms-pos-ian/cms-pos/data/output/pos-data-combined.txt"), sep = 't')
+df_pos <- read.csv(paste0(dir_root,"/data/cms-pos-ian/cms-pos/data/output/pos-data-combined2.csv"))
 ```
 
 
@@ -31,7 +32,10 @@ In your GitHub repository, please be sure to clearly address/answer the followin
 1. Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of hospital total revenues and uncompensated care over time.
 
 ```{r Q1}
-print("Hi, Ian!")
+df_HCRIS10 %>% names()
+df_HCRIS10 %>% names()
+df_pos %>% names()
+df_pos %>% head(5)
 ```
 
 
