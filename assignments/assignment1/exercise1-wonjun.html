@@ -356,7 +356,8 @@ pre code {
 </div>
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
+<pre class="r"><code>rm(list=ls())
+library(tidyverse)</code></pre>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
 ## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -365,14 +366,39 @@ pre code {
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code># Import data
+dir_root &lt;- &quot;~/Dropbox/Emory/ECON771_health2&quot;
+dir_data &lt;- &quot;~/Dropbox/research_data/health/HCRIS-Ian/data&quot;
+
+df_HCRIS96 &lt;- read.table(paste0(dir_root,&quot;/data/HCRIS-Ian/data/output/HCRIS_Data_v1996.txt&quot;), sep = &#39;\t&#39;, header=TRUE)
+df_HCRIS10 &lt;- read.table(paste0(dir_root,&quot;/data/HCRIS-Ian/data/output/HCRIS_Data_v2010.txt&quot;), sep = &#39;\t&#39;, header=TRUE)
+df_pos &lt;- read.csv(paste0(dir_root,&quot;/data/cms-pos-ian/data/output/pos-data-combined2.csv&quot;))
+df_KFF &lt;- read.csv(paste0(dir_root,&quot;/data/KFF_medicaid_expansion_2019.csv&quot;))</code></pre>
 <div id="questions" class="section level1">
 <h1>Questions</h1>
 <p>In your GitHub repository, please be sure to clearly address/answer the following questions.</p>
 <ol style="list-style-type: decimal">
-<li>Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of hospital total revenues and uncompensated care over time.</li>
+<li>Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of <em>hospital total revenues</em> and <em>uncompensated care</em> over time.</li>
 </ol>
-<pre class="r"><code>print(&quot;Hi, Ian!&quot;)</code></pre>
-<pre><code>## [1] &quot;Hi, Ian!&quot;</code></pre>
+<pre class="r"><code>df_HCRIS96 %&gt;% names()</code></pre>
+<pre><code>##  [1] &quot;report&quot;                  &quot;provider_number&quot;        
+##  [3] &quot;npi&quot;                     &quot;fy_start&quot;               
+##  [5] &quot;fy_end&quot;                  &quot;date_processed&quot;         
+##  [7] &quot;date_created&quot;            &quot;status&quot;                 
+##  [9] &quot;year&quot;                    &quot;beds&quot;                   
+## [11] &quot;tot_charges&quot;             &quot;tot_discounts&quot;          
+## [13] &quot;tot_operating_exp&quot;       &quot;ip_charges&quot;             
+## [15] &quot;icu_charges&quot;             &quot;ancillary_charges&quot;      
+## [17] &quot;tot_discharges&quot;          &quot;mcare_discharges&quot;       
+## [19] &quot;mcaid_discharges&quot;        &quot;tot_mcare_payment&quot;      
+## [21] &quot;secondary_mcare_payment&quot; &quot;street&quot;                 
+## [23] &quot;city&quot;                    &quot;state&quot;                  
+## [25] &quot;zip&quot;                     &quot;county&quot;                 
+## [27] &quot;uncomp_care&quot;             &quot;cost_to_charge&quot;         
+## [29] &quot;new_cap_ass&quot;             &quot;cash&quot;                   
+## [31] &quot;tot_pat_rev&quot;             &quot;allowance&quot;              
+## [33] &quot;net_pat_rev&quot;</code></pre>
+<p>The related variables are <code>tot_something?</code>, <code>uncomp_care</code></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Create a figure showing the mean hospital uncompensated care from 2000 to 2018. Show this trend separately by hospital ownership type (private not for profit and private for profit).</p></li>
 <li><p>Using a simple DD identification strategy, estimate the effect of Medicaid expansion on hospital uncompensated care using a traditional two-way fixed effects (TWFE) estimation:
