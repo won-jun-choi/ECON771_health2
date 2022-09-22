@@ -14,60 +14,48 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r Import library, include=FALSE}
+```{r setup.R}
 rm(list=ls())
 library(tidyverse)
-```
+library(xtable)
+library(fixest)
 
-```{r include=FALSE}
-WAU <- function(name="wonjun",os) {
-  if (os == "mac") {
-    dir_root <<- "/Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1"
-    dir_data <<- "/Users/wonjun/Dropbox/research_data/health"
+WAU <- function(name="wonjun") {
+  if (name=="wonjun"){
+    if (Sys.info()['sysname'] == "Darwin") {  # mac
+      dir_root <<- "/Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1"
+      dir_data <<- "/Users/wonjun/Dropbox/research_data/health"
+    }
+    if (Sys.info()['sysname'] == "Linux") {
+      dir_root <<- "~/Dropbox/Emory/ECON771_health2/assignments/assignment1"
+      dir_data <<- "~/Dropbox/research_data/health"
+    }
+    print(paste0("Hi ",name,". You are on ",Sys.info()['sysname']))
   }
-  if (os == "linux") {
-    dir_root <<- "~/Dropbox/Emory/ECON771_health2/assignments/assignment1"
-    dir_data <<- "~/Dropbox/research_data/health"
+  
+  if (name=="haha"){
+    print('haha')
   }
-  print(paste0("Hi ",name,". You are on ",os))
 }
-WAU(name="wonjun",os="linux")
+WAU()
 ```
 
-```{r Import data include=FALSE}
-# Import data
-df_HCRIS <- read.csv(paste0(dir_data,"/HCRIS-Ian/data/output/HCRIS_Data.txt"), sep = '\t', header=TRUE)
-df_pos <- read.csv(paste0(dir_data,"/cms-pos-ian/data/output/pos-data-combined.txt"))
-df_KFF <- read.csv(paste0(dir_data,"/Medicaid expansion from KFF/raw_data.csv"))
+```{r data.R}
+source('data.R')
 ```
 
 # Questions
 
-In your GitHub repository, please be sure to clearly address/answer the following questions.
+The related variables are:`tot_pat_rev`, `uncomp_care` where
+`uncomp_care = tot_uncomp_care_charges - tot_uncomp_care_partial_pmts + bad_debt`
+from 2011
 
-1.  Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of *hospital total revenues* and *uncompensated care* over time.
-
-```{r Q1}
-df_HCRIS %>% names()
+```{r table_sumstat_rev.R}
+source('table_sumstat_rev.R')
 ```
 
-The related variables are:`tot_pat_rev`, `uncomp_care`, `tot_uncomp_care_charges`.
-
-```{r}
-df_HCRIS %>% 
-  mutate(hosp_tot_rev = tot_pat_rev,
-         uncomp_care = sum(tot_uncomp_care_charges,
-                           uncomp_care, na.rm=T)) %>%
-  group_by(year) %>% 
-  summarise(mean=mean(tot_pat_rev,na.rm=T),
-            sd=sd(tot_pat_rev,na.rm = T),
-            min=min(tot_pat_rev,na.rm=T),
-            max=max(tot_pat_rev,na.rm=T)) %>%
-  knitr::kable()
-```
-
-```{r}
-df_HCRIS %>% filter(year==1998) %>% select(tot_uncomp_care_charges)
+```{r table_sumstat_uncompcare.R}
+source('table_sumstat_uncompcare.R')
 ```
 
 2.  Create a figure showing the mean hospital uncompensated care from
@@ -75,7 +63,7 @@ df_HCRIS %>% filter(year==1998) %>% select(tot_uncomp_care_charges)
     (private not for profit and private for profit).
 
 ```{r}
-
+source('fig_uncompcare.R')
 ```
 
 3.  Using a simple DD identification strategy, estimate the effect of
@@ -96,6 +84,26 @@ df_HCRIS %>% filter(year==1998) %>% select(tot_uncomp_care_charges)
     never treated as the control group); and one when limiting to the
     2016 treatment group (with never treated as the control group).
     Briefly explain any differences.
+    
+```{r table_DD_twfe.R}
+df_temp <- df %>%
+  filter(!is.na(uncomp_care)) %>%
+  mutate(Y = uncomp_care/1000000,
+         D = ifelse(year>= year_adopted,1,0),
+         D = ifelse(!is.na(D),D,0))
+reg_DD_twfe <- feols(Y~D| provider + year, data=df_temp)
+
+reg_DD_subsample <- function(yr) {
+  df_temp <- df %>%
+    filter(!is.na(uncomp_care)) %>%
+    filter(expanded==FALSE | year_adopted == yr) %>%
+    mutate(Y = uncomp_care/1000000,
+           D = ifelse(year>=year_adopted,1,0),
+           D = ifelse(!is.na(D),D,0))
+  reg <- feols(Y~D | provider+year, data=df_temp)
+}
+reg_DD_twfe_subsample = lapply(2014:2016, reg_DD_subsample)
+```
 
 4.  Estimate an "event study" version of the specification in part 3:
     \begin{equation}
