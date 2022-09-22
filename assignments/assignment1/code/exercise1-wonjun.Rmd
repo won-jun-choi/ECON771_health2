@@ -40,6 +40,11 @@ WAU <- function(name="wonjun") {
 WAU()
 ```
 
+```{r}
+df %>% select(year_adopted)
+```
+
+
 ```{r data.R}
 source('data.R')
 ```
@@ -93,10 +98,10 @@ df_temp <- df %>%
          D = ifelse(!is.na(D),D,0))
 reg_DD_twfe <- feols(Y~D| provider + year, data=df_temp)
 
-reg_DD_subsample <- function(yr) {
+reg_DD_subsample <- function(ssyr) {
   df_temp <- df %>%
     filter(!is.na(uncomp_care)) %>%
-    filter(expanded==FALSE | year_adopted == yr) %>%
+    filter(expanded==FALSE | year_adopted == ssyr) %>%
     mutate(Y = uncomp_care/1000000,
            D = ifelse(year>=year_adopted,1,0),
            D = ifelse(!is.na(D),D,0))
@@ -119,6 +124,27 @@ reg_DD_twfe_subsample = lapply(2014:2016, reg_DD_subsample)
     on those that expanded in 2014 (with never treated as the control
     group).
 
+```{r table_event_study.R}
+df_temp <- df %>%
+  filter(!is.na(uncomp_care)) %>%
+  mutate(relative_time = year - as.integer(year_adopted),
+         relative_time = ifelse(!is.na(relative_time),relative_time,0))
+
+reg_event <- feols(uncomp_care~i(relative_time, expanded, ref=-1) | state+year,
+                   cluster = ~state,
+                   data = df_temp)
+
+df_temp <- df %>%
+  filter(!is.na(uncomp_care),
+         (expanded==F)|year_adopted==2014 ) %>%
+  mutate(relative_time = year - as.integer(year_adopted),
+         relative_time = ifelse(!is.na(relative_time),relative_time,0))
+
+reg_event_ss <- feols(uncomp_care~i(relative_time,expanded,ref=-1)|state+year,
+                      cluster = ~state,
+                      data = df_temp)
+```
+
 5.  Sun and Abraham(SA) show that the $\delta_{\tau}$ coefficients in
     Equation \@ref(eq:event) can be written as a non-conxvex average of
     all other group-time specific average treatment effects. They
@@ -129,6 +155,11 @@ reg_DD_twfe_subsample = lapply(2014:2016, reg_DD_subsample)
     specification in Equation \@ref(eq:iwevent). Show your results for
     $\hat{\delta}_{e, \tau}$ in a Table, focusing on states with
     $E_{i}=2014$, $E_{i}=2015$, and $E_{i}=2016$.
+
+```{r}
+
+```
+
 
 6.  Present an event study graph based on the results in part 5. Hint:
     you can do this automatically in `R` with the `fixest` package

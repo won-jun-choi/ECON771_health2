@@ -1,6 +1,5 @@
-library(tidyverse)
-library(xtable)
-library(fixest)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, stargazer, withr, fixest, modelsummary)
 
 WAU <- function(name="wonjun") {
   if (name=="wonjun"){

@@ -41,7 +41,8 @@ df <- df_HCRIS %>%
 
 # select variables
 df <- df %>% 
-  filter(!(provider==151327)) %>%  # misreported
+  filter(!(provider==151327),
+         !(state=='PR' | sate=='VI')) %>%  # misreported
   select(provider, year, uncomp_care, tot_pat_rev, expanded, year_adopted,
          state, own_type)
 
