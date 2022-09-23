@@ -20,5 +20,7 @@ reg_event_ss <-
   feols(uncomp_care~i(relative_time,expanded,ref=-1)|provider+year,
         cluster = ~state, data = df_temp)
 
-etable(reg_event, reg_event_ss, tex=T, style.tex=style.tex('aer'),
+etable(reg_event, reg_event_ss, tex=T,
+       style.tex=style.tex('aer'),
+       caption.after = "haha",
        file=here("output","tab_event.tex"), replace=T)

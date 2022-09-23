@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.10.26)  23 SEP 2022 15:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.10.26)  23 SEP 2022 16:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -348,11 +348,9 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 12.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 (../output/../output/tab_sumstat_rev.tex)
-(../output/../output/tab_sumstat_uncompcare.tex) [1
-
-{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+(../output/../output/tab_sumstat_uncompcare.tex)
 </Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/output//fi
-g_uncompcare.jpg, id=8, 2107.875pt x 2107.875pt>
+g_uncompcare.jpg, id=1, 2107.875pt x 2107.875pt>
 File: /Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/outpu
 t//fig_uncompcare.jpg Graphic file (type jpg)
 <use /Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/output
@@ -360,38 +358,83 @@ t//fig_uncompcare.jpg Graphic file (type jpg)
 Package pdftex.def Info: /Users/wonjun/Dropbox/Emory/ECON771_health2/assignment
 s/assignment1/output//fig_uncompcare.jpg  used on input line 28.
 (pdftex.def)             Requested size: 421.56754pt x 421.56754pt.
- (../output/../output/tab_twfe.tex)
-[2]
+
+(../output/../output/tab_twfe.tex) [1
+
+{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (../out
+put/../output/tab_event.tex) [2]
+(../output/../output/tab_sunab.tex
+Overfull \hbox (30.41594pt too wide) in paragraph at lines 5--37
+ [][] 
+ []
+
+)
 </Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/output//fi
-g_sunab.jpg, id=15, 481.8pt x 481.8pt>
+g_sunab.jpg, id=18, 481.8pt x 481.8pt>
 File: /Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/outpu
 t//fig_sunab.jpg Graphic file (type jpg)
 <use /Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/output
 //fig_sunab.jpg>
 Package pdftex.def Info: /Users/wonjun/Dropbox/Emory/ECON771_health2/assignment
-s/assignment1/output//fig_sunab.jpg  used on input line 51.
+s/assignment1/output//fig_sunab.jpg  used on input line 73.
 (pdftex.def)             Requested size: 337.25769pt x 337.25769pt.
- [3] [4 </Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/ou
-tput//fig_uncompcare.jpg>] [5 </Users/wonjun/Dropbox/Emory/ECON771_health2/assi
-gnments/assignment1/output//fig_sunab.jpg>] (./assignment1.aux) ) 
+ [3] (../output/../output/tab_CS_event.tex
+
+LaTeX Warning: Float too large for page by 99.68658pt on input line 61.
+
+)
+</Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/output//fi
+g_CS_event.jpg, id=22, 2107.875pt x 2107.875pt>
+File: /Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/outpu
+t//fig_CS_event.jpg Graphic file (type jpg)
+<use /Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/output
+//fig_CS_event.jpg>
+Package pdftex.def Info: /Users/wonjun/Dropbox/Emory/ECON771_health2/assignment
+s/assignment1/output//fig_CS_event.jpg  used on input line 86.
+(pdftex.def)             Requested size: 421.56754pt x 421.56754pt.
+</Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/output//fi
+g_honest.jpg, id=23, 2107.875pt x 2107.875pt>
+File: /Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/outpu
+t//fig_honest.jpg Graphic file (type jpg)
+<use /Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/output
+//fig_honest.jpg>
+Package pdftex.def Info: /Users/wonjun/Dropbox/Emory/ECON771_health2/assignment
+s/assignment1/output//fig_honest.jpg  used on input line 94.
+(pdftex.def)             Requested size: 421.56754pt x 421.56754pt.
+ [4] [5] [6 </Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment
+1/output//fig_uncompcare.jpg>] [7] [8 </Users/wonjun/Dropbox/Emory/ECON771_heal
+th2/assignments/assignment1/output//fig_sunab.jpg>] [9] [10 </Users/wonjun/Drop
+box/Emory/ECON771_health2/assignments/assignment1/output//fig_CS_event.jpg>]
+[11 </Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1/output
+//fig_honest.jpg>] (./assignment1.aux) ) 
 Here is how much of TeX's memory you used:
- 5565 strings out of 478994
- 113443 string characters out of 5858183
- 400120 words of memory out of 5000000
- 22979 multiletter control sequences out of 15000+600000
- 413802 words of font info for 69 fonts, out of 8000000 for 9000
+ 5599 strings out of 478994
+ 114841 string characters out of 5858183
+ 421122 words of memory out of 5000000
+ 23000 multiletter control sequences out of 15000+600000
+ 414915 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,11n,75p,303b,599s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/te
-xlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/tex
-live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texli
-ve/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive
-/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2
-021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on assignment1.pdf (5 pages, 314301 bytes).
+ 71i,14n,75p,557b,633s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2021/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2021/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmsy6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmsy8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/sy
+mbols/msam7.pfb>
+Output written on assignment1.pdf (11 pages, 761676 bytes).
 PDF statistics:
- 42 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 104 PDF objects out of 1000 (max. 8388607)
+ 71 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
