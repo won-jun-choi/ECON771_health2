@@ -26,7 +26,9 @@ twfe <- append(twfe, reg_DD_twfe_subsample)
 tab <- msummary(twfe,stars=TRUE,
                 coef_rename = c("D"="expand"),
                 gof_map=c("nobs", "r.squared"),
-                notes="Each column shows the estimation results of (1) Full sample, (2) Only 2014, (3) Only 2015, (4) Only 2016",
-                output = "gt")
-gt::gtsave(tab, filename=here('output','tab_twfe.tex'))
+                title = "haha",
+                notes=c("(2) Only 2014, (3) Only 2015, (4) Only 2016",
+                "Each column shows the estimation results of (1) Full sample,"),
+                output = here('output','tab_twfe.tex'))
+#gt::gtsave(tab, filename=here('output','tab_twfe.tex'))
 print("created tab_twfe.tex")

@@ -1,15 +1,17 @@
-\setlength{\LTpost}{0mm}
-\begin{longtable}{lcccc}
+\begin{table}
+\centering
+\begin{tabular}[t]{lcccc}
 \toprule
-  & Model 1 & Model 2 & Model 3 & Model 4 \\ 
+  & Model 1 & Model 2 & Model 3 & Model 4\\
 \midrule
-expand & -31.388*** & -38.359*** & -38.090*** & -39.504*** \\ 
- & (2.815) & (3.858) & (5.077) & (4.332) \\ 
-Num.Obs. & 36510 & 27789 & 16296 & 14822 \\ 
+expand & \num{-31.388}*** & \num{-38.359}*** & \num{-38.090}*** & \num{-39.504}***\\
+ & (\num{2.815}) & (\num{3.858}) & (\num{5.077}) & (\num{4.332})\\
+\midrule
+Num.Obs. & \num{36510} & \num{27789} & \num{16296} & \num{14822}\\
 \bottomrule
-\end{longtable}
-\begin{minipage}{\linewidth}
-+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001\\
-Each column shows the estimation results of (1) Full sample, (2) Only 2014, (3) Only 2015, (4) Only 2016\\
-\end{minipage}
-
+\multicolumn{5}{l}{\rule{0pt}{1em}Each column shows the estimation results of (1) Full sample,}\\
+\multicolumn{5}{l}{\rule{0pt}{1em}(2) Only 2014, (3) Only 2015, (4) Only 2016}\\
+\multicolumn{5}{l}{\rule{0pt}{1em}+ p $<$ 0.1, * p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001}\\
+\end{tabular}
+\caption{The estimation results of TWFE}
+\end{table}

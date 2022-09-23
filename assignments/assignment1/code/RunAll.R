@@ -17,7 +17,7 @@ source('table_sumstat_rev.R')
 source('table_sumstat_uncompcare.R')
 source('table_twfe.R')
 source('table_event_study.R')
-#source('table_sunab.R')
+source('table_sunab.R')
 
 # Figures
 source('fig_uncompcare.R')

@@ -10,10 +10,10 @@ tab <- df %>%
             sd=sd(uncomp_care/1000000,na.rm = T),
             min=min(uncomp_care/1000000,na.rm=T),
             max=max(uncomp_care/1000000,na.rm=T)) %>%
-  mutate(year=as.integer(year))
+  mutate(year = as.integer(year))
 xtab <- xtable(tab,
                align = c("c","c","c","c","c","c"),
                caption = "Summary statistics of uncompensated care")
 outfile = paste0(dir_root,'/output/tab_sumstat_uncompcare.tex')
-print(xtab, file=outfile)
+print(xtab, file=outfile, include.rownames=F)
 print(paste0("Created ",outfile))
