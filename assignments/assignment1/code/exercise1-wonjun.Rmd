@@ -144,7 +144,7 @@ iplot(reg_event)
     $\hat{\delta}_{e, \tau}$ in a Table, focusing on states with
     $E_{i}=2014$, $E_{i}=2015$, and $E_{i}=2016$.
 
-```{r}
+```{r table_sunab.R}
 df_temp <- df %>%
   filter(!is.na(uncomp_care)) %>%
   mutate(uncomp_care = uncomp_care/1000000,
@@ -171,13 +171,20 @@ reg_sunab['coefficients']
     mistakes compared to doing the tables/figures manually and also help
     to get the standard errors correct.
 
-```{r}
+```{r fig_sunab.R}
+df_temp <- df %>%
+  filter(!is.na(uncomp_care)) %>%
+  mutate(uncomp_care = uncomp_care/1000000,
+         expand_year = ifelse(expanded==FALSE,999,as.integer(year_adopted)),
+         time_to_treat = ifelse(expanded==FALSE,-1, year-expand_year))
+
+reg_sunab <- feols(uncomp_care~sunab(expand_year, time_to_treat)|provider+ year,
+                  cluster=~state,
+                  data=df_temp)
+
 jpeg(filename=here('output','fig_sunab.jpg'))
 iplot(reg_sunab)
 dev.off()
-```
-```{r}
-?png
 ```
 
 7.  Callaway and Sant'Anna (CS) offer a non-parametric solution that
@@ -193,7 +200,7 @@ dev.off()
     alternative event study using the CS estimator. Hint: check out the
     `did` package in `R` or the `csdid` package in `Stata`.
 
-```{r}
+```{r tab_CS.R}
 df_temp <- df %>%
   filter(!is.na(uncomp_care)) %>%
   mutate(uncomp_care = uncomp_care/1000000,
@@ -216,7 +223,23 @@ reg_CS_event
 ```
 
 
-```{r}
+```{r fig_CS_event.R}
+df_temp <- df %>%
+  filter(!is.na(uncomp_care)) %>%
+  mutate(uncomp_care = uncomp_care/1000000,
+         expand_year = ifelse(expanded==FALSE,0,as.integer(year_adopted))) %>%
+  group_by(provider) %>%
+  mutate(providergroup=cur_group_id()) %>% ungroup()
+
+reg_CS <- att_gt(yname="uncomp_care",
+                 tname="year",
+                 idname="providergroup",
+                 gname="expand_year",
+                 data=df_temp, panel=TRUE, est_method="dr",
+                 allow_unbalanced_panel=TRUE)
+
+reg_CS_event <- aggte(reg_CS, type="dynamic")
+
 ggdid(reg_CS_event)
 ggsave(here('output','fig_CS.jpg'))
 ```
@@ -237,7 +260,7 @@ ggsave(here('output','fig_CS.jpg'))
     [here](https://github.com/pedrohcgs/CS_RR) for some help in
     combining the `HonestDiD` package with CS estimates.
 
-```{r}
+```{r fig_honest.R}
 ### First, we import the function Pedro Sant'Anna created for 
 ##   formatting did output for HonestDiD ####
 
@@ -375,12 +398,6 @@ HonestDiD::createSensitivityPlot_relativeMagnitudes(sensitivity_results$robust_c
 ggsave(here('output','fig_honest.jpg'))
 
 ```
-
-
-```{r}
-ggsave(here('output','fig_honest.jpg'))
-```
-
 
 9.  Discuss your findings and compare estimates from different
     estimators (e.g., are your results sensitive to different
