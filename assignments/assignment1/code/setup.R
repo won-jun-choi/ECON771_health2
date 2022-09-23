@@ -1,5 +1,6 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, stargazer, withr, fixest, modelsummary)
+pacman::p_load(tidyverse, stargazer, withr, fixest, modelsummary,
+               did, HonestDiD, DRDID, xtable, here, gt, mvtnorm,Rglpk)
 
 WAU <- function(name="wonjun") {
   if (name=="wonjun"){

@@ -15,29 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r setup.R}
-rm(list=ls())
-library(tidyverse)
-library(xtable)
-library(fixest)
-
-WAU <- function(name="wonjun") {
-  if (name=="wonjun"){
-    if (Sys.info()['sysname'] == "Darwin") {  # mac
-      dir_root <<- "/Users/wonjun/Dropbox/Emory/ECON771_health2/assignments/assignment1"
-      dir_data <<- "/Users/wonjun/Dropbox/research_data/health"
-    }
-    if (Sys.info()['sysname'] == "Linux") {
-      dir_root <<- "~/Dropbox/Emory/ECON771_health2/assignments/assignment1"
-      dir_data <<- "~/Dropbox/research_data/health"
-    }
-    print(paste0("Hi ",name,". You are on ",Sys.info()['sysname']))
-  }
-  
-  if (name=="haha"){
-    print('haha')
-  }
-}
-WAU()
+source('setup.R')
+WAU(name="wonjun")
 ```
 
 ```{r data.R}
@@ -94,28 +73,24 @@ df_temp <- df %>%
 reg_DD_twfe <- feols(Y~D| provider + year, data=df_temp)
 
 reg_DD_subsample <- function(ssyr) {
-  df_temp <- df %>%
-    filter(!is.na(uncomp_care)) %>%
-    filter(expanded==FALSE | year_adopted == ssyr) %>%
-    mutate(Y = uncomp_care/1000000,
-           D = ifelse(year>=year_adopted,1,0),
-           D = ifelse(!is.na(D),D,0))
-  reg <- feols(Y~D | provider+year, data=df_temp)
+  reg <- feols(Y~D | provider+year,
+               data=df_temp %>% 
+                 filter(expanded==FALSE |
+                        year_adopted==ssyr))
+  return(reg)
 }
 reg_DD_twfe_subsample = lapply(2014:2016, reg_DD_subsample)
-```
 
-```{r}
 twfe <- list(reg_DD_twfe)
 twfe <- append(twfe, reg_DD_twfe_subsample)
+
+tab <- msummary(twfe,stars=TRUE,
+         coef_rename = c("D"="expand"),
+         gof_map=c("nobs", "r.squared"),
+         notes="Each column shows the estimation results of (1) Full sample, (2) Only 2014, (3) Only 2015, (4) Only 2016",
+         output = "gt")
+gt::gtsave(tab, filename=here('output','tab_twfe.tex'))
 ```
-
-```{r}
-msummary(twfe, stars=TRUE)
-```
-?msummary
-
-
 
 4.  Estimate an "event study" version of the specification in part 3:
     \begin{equation}
@@ -138,19 +113,20 @@ df_temp <- df %>%
          relative_time = year - as.integer(year_adopted),
          relative_time = ifelse(!is.na(relative_time),relative_time,0))
 
-reg_event <- feols(uncomp_care~i(relative_time, expanded, ref=-1) |provider+year,
-                   cluster = ~state,
-                   data = df_temp)
+reg_event <- 
+  feols(uncomp_care~i(relative_time, expanded, ref=-1) |provider+year,
+        cluster = ~state, data = df_temp)
 
 df_temp <- df_temp %>% filter((expanded==F)|year_adopted==2014)
 
-reg_event_ss <- feols(uncomp_care~i(relative_time,expanded,ref=-1)|provider+year,
-                      cluster = ~state,
-                      data = df_temp)
+reg_event_ss <- 
+  feols(uncomp_care~i(relative_time,expanded,ref=-1)|provider+year,
+        cluster = ~state, data = df_temp)
+
+etable(reg_event, reg_event_ss, tex=T, style.tex=style.tex('aer'),
+         file=here("output","tab_event.tex"), replace=T)
 ```
-```{r}
-reg_event
-```
+
 ```{r}
 iplot(reg_event)
 ```
@@ -180,6 +156,14 @@ reg_sunab <- feols(uncomp_care~sunab(expand_year, time_to_treat)|provider+ year,
                   data=df_temp)
 ```
 
+```{r}
+reg_sunab$coefficients['time_to_treat::[:digit:]:cohort::2019']
+```
+```{r}
+reg_sunab['coefficients']
+```
+
+
 6.  Present an event study graph based on the results in part 5. Hint:
     you can do this automatically in `R` with the `fixest` package
     (using the `sunab` syntax for interactions), or with
@@ -188,10 +172,12 @@ reg_sunab <- feols(uncomp_care~sunab(expand_year, time_to_treat)|provider+ year,
     to get the standard errors correct.
 
 ```{r}
+jpeg(filename=here('output','fig_sunab.jpg'))
 iplot(reg_sunab)
+dev.off()
 ```
 ```{r}
-reg_sunab
+?png
 ```
 
 7.  Callaway and Sant'Anna (CS) offer a non-parametric solution that
@@ -213,11 +199,11 @@ df_temp <- df %>%
   mutate(uncomp_care = uncomp_care/1000000,
          expand_year = ifelse(expanded==FALSE,0,as.integer(year_adopted))) %>%
   group_by(provider) %>%
-  mutate(stategroup=cur_group_id()) %>% ungroup()
+  mutate(providergroup=cur_group_id()) %>% ungroup()
 
 reg_CS <- att_gt(yname="uncomp_care",
                  tname="year",
-                 idname="stategroup",
+                 idname="providergroup",
                  gname="expand_year",
                  data=df_temp, panel=TRUE, est_method="dr",
                  allow_unbalanced_panel=TRUE)
@@ -232,6 +218,7 @@ reg_CS_event
 
 ```{r}
 ggdid(reg_CS_event)
+ggsave(here('output','fig_CS.jpg'))
 ```
 
 
@@ -249,10 +236,6 @@ ggdid(reg_CS_event)
     $\bar{M} = \{0, 0.5, 1, 1.5, 2\}$. Check out the GitHub repo
     [here](https://github.com/pedrohcgs/CS_RR) for some help in
     combining the `HonestDiD` package with CS estimates.
-
-```{r}
-library(HonestDiD)
-```
 
 ```{r}
 ### First, we import the function Pedro Sant'Anna created for 
@@ -368,32 +351,34 @@ honest_did.AGGTEobj <- function(es,
 ########
 
 # Now, we run the C&S event-study with 'universal' base-period using the did package
-cs_results <- did::att_gt(
-                     yname = "dins",
-                     tname = "year",
-                     idname = "stfips", 
-                     gname = "yexp2", 
-                     data = df,
-                     control_group = "notyettreated")
-
-#We create an event-study (using 5 periods before and after)
-es <- did::aggte(cs_results, type = "dynamic", 
-            min_e = -5, max_e = 5)
+# cs_results <- did::att_gt(
+#                      yname = "dins",
+#                      tname = "year",
+#                      idname = "stfips", 
+#                      gname = "yexp2", 
+#                      data = df,
+#                      control_group = "notyettreated")
+# 
+# #We create an event-study (using 5 periods before and after)
+# es <- did::aggte(cs_results, type = "dynamic", 
+#             min_e = -5, max_e = 5)
 
 #Run sensitivity analysis for relative magnitudes 
 sensitivity_results <-
-honest_did.AGGTEobj(es,
+honest_did.AGGTEobj(reg_CS_event,
                     e =0,
                     type = "relative_magnitude",
                     Mbarvec = seq(from = 0.5, to = 2, by = 0.5))
 
 HonestDiD::createSensitivityPlot_relativeMagnitudes(sensitivity_results$robust_ci,
                                                     sensitivity_results$orig_ci)
+ggsave(here('output','fig_honest.jpg'))
+
 ```
 
 
 ```{r}
-a <- reg_CS
+ggsave(here('output','fig_honest.jpg'))
 ```
 
 
