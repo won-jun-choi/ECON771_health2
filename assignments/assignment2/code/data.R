@@ -1,5 +1,6 @@
 if (sys.nframe()==0){ # if __name__==__main__
   rm(list=ls())
+  gc()
   source('setup.R')
   WAU(name="wonjun")
 }
@@ -21,7 +22,7 @@ for (y in 2012:2017) {
            OFFICE = pos_office,
            ASC = pos_asc,
            INT = if_else(HOPD/(HOPD+OFFICE+ASC)>=0.75,1,0)) %>%  # see question 2
-    select(Year, npi, INT, group1, group2)
+    select(Year, npi, INT, group1)  # group1 is used as a key when merging IV
   
   df_puf <- df_puf %>%
     select(npi, nppes_credentials, starts_with('average_'), line_srvc_cnt,
@@ -33,4 +34,4 @@ for (y in 2012:2017) {
 }
 rm(list=c('df_MDPPAS','df_puf','df_year'))
 gc()
-# vroom_write(df, file = here(dir_root,'temp','superfatdata.csv'), delim = ",")
+vroom_write(df, file = here(dir_root,'temp','superfatdata.csv'), delim = ",")
