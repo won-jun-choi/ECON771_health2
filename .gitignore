@@ -1,5 +1,6 @@
 data/
 papers/
+temp/
 *.Rhistory
 *.Rproj
 .Rproj.user

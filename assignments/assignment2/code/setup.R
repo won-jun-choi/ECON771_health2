@@ -1,5 +1,5 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, here, vroom)
+pacman::p_load(tidyverse, here, vroom, xtable)
 
 WAU <- function(name="wonjun") {
   if (name=="wonjun"){

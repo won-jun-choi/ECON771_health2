@@ -1,7 +1,7 @@
 # Meta =======================
 # Title: RunAll
 # Author: Wonjun Choi
-# Last Edit: Oct-12-2022
+# Last Edit: Oct-13-2022
 # Description: haha
 
 # Setup =======================
@@ -14,3 +14,5 @@ df <- vroom(here(dir_root,'temp','superfatdata.csv'))
 
 # Table =============================
 source('table_summary.R')
+
+# Figure ============================
