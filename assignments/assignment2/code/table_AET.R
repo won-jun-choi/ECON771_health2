@@ -35,9 +35,14 @@ for (i in 1:length(rho_list)){
   for (j in 1:length(R2max_list)){
     rho <- rho_list[i]
     R2max <- R2max_list[j]
-    delta_star <- delta_Dx - rho*(delta_D-delta_Dx)*(R2max-R2_Dx)/(R2_Dx-R2_D)
+    if (R2max > R2_Dx) {
+      delta_star <- delta_Dx - rho*(delta_D-delta_Dx)*(R2max-R2_Dx)/(R2_Dx-R2_D)
+      interval <- paste0('[',round(delta_Dx,2),',',round(delta_star,2),']')
+    } else {
+      interval <- 'NA'
+    }
     colname <- paste0('$R_{max}^2=',R2max,'$')
-    row[1,colname] <- paste0('[',round(delta_Dx,2),',',round(delta_star,2),']')
+    row[1,colname] <- interval
   }
   tab <- bind_rows(tab, row)
 }

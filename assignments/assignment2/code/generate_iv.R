@@ -34,7 +34,13 @@ for (y in 2012:2017) {
       y<=2013 ~ ((y-2009)/4)*dprice_rel_2010,
       y>2013  ~ dprice_rel_2010),
       denom = line_srvc_cnt*price_nonfac_orig_2010,
-      numer = price_shock*line_srvc_cnt*price_nonfac_orig_2010) %>%
+      numer = price_shock*line_srvc_cnt*price_nonfac_orig_2010)
+  
+  # save for question 8 (pseudo iv)
+  filename <- here(dir_root,'temp',paste0('priceshock',y,'.csv'))
+  vroom_write(price.shock, file = filename, delim = ",")
+  
+  price.shock <- price.shock %>%
     group_by(npi) %>%
     summarize(phy_numer=sum(numer, na.rm=TRUE),
               phy_denom=sum(denom, na.rm=TRUE),
