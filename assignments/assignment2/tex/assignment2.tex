@@ -16,7 +16,7 @@
 		\subfile{../output/tab_sumstat}
 		
 		
-		\item[2.] The upper line is the trend of unintegrated physicians, and the bottom line is of integrated physicians. The total number of claims of unintegrated physicians begins to increase after the price shock is fully implemented, while it remains in the similar level for integrated physicians. I am sorry but the figure is rescaled to be put in the right place.
+		\item[2.] The upper line is the trend of unintegrated physicians, and the bottom line is of integrated physicians. The total number of claims of unintegrated physicians begins to increase after the price shock is fully implemented, while it remains in the similar level for integrated physicians. The figure is rescaled to be put in the right place.
 		\begin{figure} [ht]
 			\centering
 			\includegraphics[scale=0.2]{fig_claim_by_int.jpg}
@@ -35,7 +35,7 @@
 		\begin{eqnarray*}
 			\delta^* \approx \hat{\delta}_{D,x_1} - \rho \times [\hat{\delta}_D - \hat{\delta}_{D,x_1}] \times \frac{R_{max}^2 - R_{D,x_1}^2}{R_{D,x_1}^2 - R_D^2} \xrightarrow{p} \delta
 		\end{eqnarray*}
-	where $x_1$ is a control variables (fixed effects) and $\hat{\delta}_X$ and $R^2_X$ indicates the treatment effect and $R^2$ in the regression when a vector $X$ is used as a regressor. $R_{max}^2$ is a hypothetical goodness-of-fit $R^2$ in a scenario where we were able to observe unobserved variables. $R_{max}^2 =1$ indicates the situation where we can observe every variables that determines the outcome. $\rho$ is the hypothetical correlation between the treatment variable and the unobservables.
+	where $x_1$ is a control variables (fixed effects) and $\hat{\delta}_X$ and $R^2_X$ indicates the treatment effect and $R^2$ in the regression when a vector $X$ is used as a regressor. $R_{max}^2$ is a hypothetical goodness-of-fit $R^2$ in a scenario where we were able to observe unobserved variables. $R_{max}^2 =1$ indicates the situation where we can observe every variables that determines the outcome. $\rho$ is the hypothetical correlation between the treatment variable and the unobservables. I think I included the rownames in R code, but it somehow disappeared.
 	
 		\begin{tiny}
     	    \subfile{../output/tab_AET}
@@ -79,9 +79,7 @@
 
 		\item[9.] In this exercise, we did only one main estimation (2SLS). All of the other things were auxiliary analysis. The results consistently indicates integration and the number of claims has a negative relationship, but the magnitude varies especially in Borusyak and Hull's approach suggesting that the instrument might be able to polished more.
 		
-		\item[10.] I think I could have learn more about practical issues of IV if I started the assignment earlier. I thought I would be able to start earlier, but I was ignorant of the fact that the semester usually gets busier as time goes by.
-		
-		Also, the data work is quite overwhelming. I can't imagine doing this without the guidance code. But I think I learned a lot, anyway. Researchers are great people.
+		\item[10.] I think I could have learn more about practical issues of IV, which was so fun, if I started the assignment earlier. I thought I would be able to start earlier, but I was ignorant of the fact that the semester usually gets busier as time goes by. Also, the data work is quite overwhelming. I can't imagine doing this without the guidance code. But I think I learned a lot, anyway. Researchers are great people.
 		
 	\end{itemize}
 \end{document}
