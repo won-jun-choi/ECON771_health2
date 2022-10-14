@@ -6,7 +6,7 @@ if (sys.nframe()==0){ # if __name__==__main__
   # from table_twfe_claim_int
   df_temp <- df %>% 
     filter(!is.na(INT)) %>%
-    filter(!(Year==2012 & INT==1)) %>%
+    filter(!(npi %in% exclude)) %>%
     group_by(Year, npi) %>%
     mutate(claims = log(sum(line_srvc_cnt, na.rm=T))) %>%
     select(npi, Year, claims, INT) %>%
@@ -56,5 +56,6 @@ print(xtab,file=outfile,include.rownames=F)
 print('created tab_AET.tex')
 
 rm(list=c('row','tab','colname','delta_D','delta_Dx','delta_star','i','j',
-          'R2_D','R2_Dx','R2max','R2max_list','rho','rho_list'))
+          'R2_D','R2_Dx','R2max','R2max_list','rho','rho_list','interval',
+          'outfile', 'xtab'))
 gc()

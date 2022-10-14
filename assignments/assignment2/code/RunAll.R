@@ -3,7 +3,7 @@
 # Author: Wonjun Choi
 # Last Edit: Oct-13-2022
 # Description: haha
-
+rm(list=ls())
 # Setup =======================
 source('setup.R')
 WAU(name='wonjun')
@@ -18,6 +18,8 @@ source('table_twfe_claim_int.R')  # 3
 source('table_AET.R')  # 4
 source('table_iv.R')  # 5
 source('table_DWHtest.R')  # 6
+source('table_weakIV.R')  # 7
+source('table_BH.R')  # 8
 
 # Figure ============================
 source('figure_claim_by_integrated.R')  # 2

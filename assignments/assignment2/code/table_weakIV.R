@@ -28,13 +28,28 @@ df_temp$Zres <- reg$residuals
 
 # Anderson-Rubin CI
 reg <- ivmodel(Y=df_temp$Yres, D=df_temp$Dres, Z=df_temp$Zres)
-CI_AR <- AR.test(reg)
+AR <- AR.test(reg)
+CI_AR <- AR$ci
 
 # Lee (2021) tF
 reg <- feols(INT~PriceChange | npi+Year, data=df_temp)
-t_1S <- reg$coefficients[['PriceChange']]/reg$se[['PriceChange']]
-F_1S <- t_1S^2
+F_1S <- (reg$coefficients[['PriceChange']]/reg$se[['PriceChange']])^2
 print(paste0('First stage F is ',round(F_1S)))
+cf <- 1  # correction factor: the third line of Table 3
+df_temp$INThat <- reg$fitted.values
+reg <- feols(log_claims~INThat | npi+Year, data=df_temp)
+lower <- reg$coefficients[['INThat']]-1.96*reg$se[['INThat']]*cf
+upper <- reg$coefficients[['INThat']]+1.96*reg$se[['INThat']]*cf
+CI_Lee <- data.frame('lower'=lower,'upper'=upper)
 
-lower <- reg$coefficients[['PriceChange']] - 1.96*reg$se[['PriceChange']]*correction
-# see 1S F statistics -> Find F statistics in Table3 -> Read the bottom line
+tab <- rbind(CI_AR, CI_Lee)
+row.names(tab) <- c('Anderson-Rubin','Lee')
+
+xtab <- xtable(tab,
+               align = c("c","c","c"),
+               caption = "Confidence intervals",
+               label = "tab:ci")
+print(xtab, file=here(dir_root,'tex','tab_ci.tex'),include.rownames=T)
+print("created tab_ci.tex")
+rm(list=c('cf','reg','tab','xtab','F_1S','CI_Lee','CI_AR','AR'))
+gc()

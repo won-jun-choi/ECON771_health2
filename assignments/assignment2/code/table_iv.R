@@ -2,12 +2,14 @@ if (sys.nframe()==0){ # if __name__==__main__
   source('setup.R')
   WAU(name="wonjun")
   df <- vroom(here(dir_root,'temp','superfatdata.csv'))
-  iv <- vroom(here(dir_root,'temp','instrument.csv'))
+  exclude <- (df %>% filter(Year==2012 & INT==1))$npi
 }
-
+iv <- vroom(here(dir_root,'temp','instrument.csv'))
+rm(list=c('df_temp'))
+gc()
 df_temp <- df %>% 
   filter(!is.na(INT)) %>%
-  filter(!(Year==2012 & INT==1)) %>%
+  filter(!(npi %in% exclude)) %>%
   group_by(Year, npi) %>%
   mutate(log_claims = log(sum(line_srvc_cnt, na.rm=T))) %>%
   select(npi, Year, log_claims, INT, group1) %>%
