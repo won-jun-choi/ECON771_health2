@@ -1,1 +1,1 @@
-Please find `output/report.pdf`.
+Please find `tex/report.pdf`.
