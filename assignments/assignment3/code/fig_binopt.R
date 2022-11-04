@@ -15,10 +15,14 @@ rd_linear <- rdplot(y = df_temp$log_share,
 linear <- as_tibble(rd_linear$vars_poly)
 
 rd_quartic <- rdplot(y = df_temp$log_share,
-             x = df_temp$LISsubsidy,
-             c = 0, p = 4, h=10, n=20, hide=T)
+                     x = df_temp$LISsubsidy,
+                     c = 0, p = 4, h=10, hide=T,
+                     binselect = 'esmv')
 bin.avg <- as_tibble(rd_quartic$vars_bins)
 quartic <- as_tibble(rd_quartic$vars_poly)
+
+J <- rd_quartic$J
+print(J)
 
 fig <- bin.avg %>%
   ggplot() +
@@ -28,7 +32,7 @@ fig <- bin.avg %>%
   xlab("Monthly Premium - LIS Subsidy, 2006") +
   ylab("Log Enrollment Share, 2006")
 
-ggsave(fig, filename=here(dir_root,'output','fig_rdplot.jpg'),
+ggsave(fig, filename=here(dir_root,'output','fig_binopt.jpg'),
        width = 7, height = 4)
 rm(list=c('linear','quartic','rd_linear','rd_quartic','plot.bin','bin.avg'))
 gc()
