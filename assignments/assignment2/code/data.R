@@ -16,7 +16,7 @@ for (y in 2012:2017) {
   
   df_MDPPAS$npi <- as.character(df_MDPPAS$npi)  # num -> char
   df_MDPPAS <- df_MDPPAS %>% 
-    select(npi, Year, pos_asc, pos_opd, pos_office, group1, group2) %>%
+    select(npi, Year, pos_asc, pos_opd, pos_office, group1) %>%
     group_by(Year, npi) %>%
     mutate(HOPD = pos_opd,
            OFFICE = pos_office,
