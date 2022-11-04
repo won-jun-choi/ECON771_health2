@@ -24,6 +24,8 @@ plot.bin <- bin.avg %>%
   filter(rdplot_mean_x <= 10 & rdplot_mean_x >= -10) %>%
   ggplot(aes(x=rdplot_mean_x,y=rdplot_mean_y)) +
   geom_point() + theme_bw() +
-  geom_line(aes(x=))
+  geom_abline(aes(x=seq(-4,0,0.1), linetype='dashed',intercept = rd_linear_params[[1,'Left']],
+                  slope = rd_linear_params[[2,'Left']])
+              )
 
 show(plot.bin)
