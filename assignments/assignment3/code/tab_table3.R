@@ -81,4 +81,3 @@ panel2 <- msummary(list('2006'=ols2006, '2007'=ols2007, '2008'=ols2008,
                    gof_map=c('nobs',
                              'r.squared'),
                    stars=c('*'=0.10,'**'=0.05,'***'=0.01))
-
