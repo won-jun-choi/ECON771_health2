@@ -28,13 +28,18 @@ share2006 <- df %>%
   select(uniqueID, share) %>%
   rename(share2006 = share)
 
-df_temp <- df_temp %>% left_join(share2006, by='uniqueID') %>% 
-  mutate(log_share2006 = log(share2006))
-
-lm <- feols(Dpremium ~ log_share2006 | state+year | c(log_share2006)~LIS,
-            data=df_temp)
-summary(lm)
+# df_temp <- df_temp %>% left_join(share2006, by='uniqueID') %>% 
+#   mutate(log_share2006 = log(share2006))
+# 
+# lm <- feols(Dpremium ~ log_share2006 | state+year | c(log_share2006)~LIS,
+#             data=df_temp)
+# summary(lm)
 
 lm <- feols(log_premium ~ log_share2006 | state+year | c(log_share2006)~LIS,
             data=df_temp)
-summary(lm)
+
+tab <- etable(lm,
+              file=here(dir_root,'output','tab_iv.tex'),
+              dict=c('c(log_share2006)'='$\\log(share)$'),
+              replace=T)
+tab
