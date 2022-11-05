@@ -20,20 +20,13 @@ df_temp <- df %>%
          L4.LISsubsidy = lag(LISsubsidy, n=4, default=NA, order_by=year)) %>%
   ungroup()
 
-y <- df_temp%>%filter(year==2006)%>%pull(log_share)
-
-cls_rdrobust <- function(year,score,p) {
-  rdd <- rdrobust(y = df_temp%>%filter(year==year)%>%pull(log_share),
-                  x = -1*df_temp%>%filter(year==year)%>%pull(score),
-                  p=p, bwselect='cerrd')
-  return(rdd)
-}
-
 panel1 <- data.frame()
 for (y in 1:5) {
   if (y == 1) {score <- 'LISsubsidy'}
   else {score <- paste0('L',y-1,'.LISsubsidy')}
-  rdd <- cls_rdrobust(year=2005+i, score, p=1)
+  rdd <- rdrobust(y = df_temp%>%filter(year==2005+y)%>%pull(log_share),
+                  x = -1*df_temp%>%filter(year==2005+y)%>%pull(score),
+                  p=1, kernel='uniform', bwselect='cerrd')
   coef <- round(rdd$coef[1],3)
   se <- paste0("(",round(rdd$se[1],3),")")
   bw = round(rdd$bws[1,1],3)
@@ -47,7 +40,9 @@ panel2 <- data.frame()
 for (y in 1:5) {
   if (y == 1) {score <- 'LISsubsidy'}
   else {score <- paste0('L',y-1,'.LISsubsidy')}
-  rdd <- cls_rdrobust(year=2005+i, score, p=2)
+  rdd <- rdrobust(y = df_temp%>%filter(year==2005+y)%>%pull(log_share),
+                  x = -1*df_temp%>%filter(year==2005+y)%>%pull(score),
+                  p=2, kernel='uniform', bwselect='cerrd')
   coef <- round(rdd$coef[1],3)
   se <- paste0("(",round(rdd$se[1],3),")")
   bw = round(rdd$bws[1,1],3)
@@ -56,7 +51,7 @@ for (y in 1:5) {
 }
 rownames(panel2) <- c(2006:2010)
 panel2 <- panel2 %>% t()
-panel2
+# panel2
 
 xtab <- xtable(panel1)
 print(xtab, file=here(dir_root,'output','tab_rdrobust_panel1.tex'))

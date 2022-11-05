@@ -1,7 +1,7 @@
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, janitor, reshape2, 
                here, haven, xtable, modelsummary,
-               rdrobust, rddensity)
+               rdrobust, rddensity, fixest)
 
 WAU <- function(name="wonjun") {
   if (name=="wonjun"){

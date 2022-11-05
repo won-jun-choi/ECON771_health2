@@ -6,6 +6,8 @@ source('data.R')
 # tables
 source('tab_descstat.R') # Q1
 source('tab_table3.R')  # Q6
+source('tab_rdrobust.R')  # Q7
+source('tab_iv_partD.R')  # Q8
 
 # figures
 source('fig_premium_enrolshare.R') # Q2
