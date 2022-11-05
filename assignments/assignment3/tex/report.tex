@@ -58,7 +58,7 @@
 \end{figure}
 The density of the left limit was higher than the density of the right limit, but the difference was not statistically significant.
 
-\item[6.] The regression results are presented in Table \ref{tab:panel1} and \ref{tab:panel2}. Table 3 shows the result of local quartic regression.
+\item[6.] The regression results are presented in Table \ref{tab:panel1} and \ref{tab:panel2}. Table 3 shows the result of local quadratic regression.
 \subfile{../output/tab_panel1}
 \subfile{../output/tab_panel2}
 
@@ -67,12 +67,18 @@ The density of the left limit was higher than the density of the right limit, bu
 \subfile{../output/tab_rdrobust_panel2}
 The bandwidth in question 6 was uniformly 4. However, the CE-optimal bandwidth was by far smaller than 4. Overall coefficients didn't change much in year 2006, 2007, and 2008, but the coefficients were significantly different in year 2009, 2010.
 
-\item[8.]
+\item[8.] Table \ref{tab:iv} shows the 2SLS result. The result implies that the premium does not become higher as the plan becomes market dominant.
 
-\item[9.]
+\begin{table}[ht]
+	\subfile{../output/tab_iv}
+	\caption{The Effect of Enrollment Share on Premium}
+	\label{tab:iv}
+\end{table}
 
-\item[10.]
 
+\item[9.] The results were robust to the choice of bandwidth. Table 4 in Ericson (2014) shows the plan that survived longer has higher premium, suggesting that insurers might exploit profit from consumer inertia. However, the IV results of question 8 shows market share in fact has no effect on premium, where it should have had a positive correlation if the invest-then-harvest were true. 
+
+\item[10.] While RD was intuitively straightforward, the theory and coding behind was quite invovled to me. However, I don't actually see there is much gain in using more sophisticated technique. I am not sure how much they can improve empirical findings.
 
 
 \end{itemize}
